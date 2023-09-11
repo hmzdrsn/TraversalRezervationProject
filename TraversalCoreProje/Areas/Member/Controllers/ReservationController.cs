@@ -2,6 +2,7 @@
 using DataAccessLayer.EntityFramework;
 using DataAccessLayer.Migrations;
 using EntityLayer.Concrete;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
@@ -14,17 +15,27 @@ namespace TraversalCoreProje.Areas.Member.Controllers
     {
         DestinationManager destinationManager = new DestinationManager(new EfDestinationDal());
         ReservationManager reservationManager = new ReservationManager(new EfReservationDal());
-        
+
+        private readonly UserManager<AppUser> _userManager;
+
+        public ReservationController(UserManager<AppUser> userManager)
+        {
+            _userManager = userManager;
+        }
+
         public IActionResult MyCurrentReservation()
         {
-            int i = 1002;
-            var values = reservationManager.TGetListById(i);
-            //var values = reservationManager.TGetById();
-            return View(values);
+            return View();
         }
         public IActionResult MyOldReservation()
         {
             return View();
+        }
+        public async Task <IActionResult> MyApprovalReservation()//onay bekleyen
+        {
+            var values = await _userManager.FindByNameAsync(User.Identity.Name);
+            var valueslist = reservationManager.GetListApprovalReservation(values.Id);
+            return View(valueslist);
         }
 
         [HttpGet]
@@ -44,6 +55,7 @@ namespace TraversalCoreProje.Areas.Member.Controllers
         public IActionResult NewReservation(Reservation p)
         {
             p.AppUserId = 1002;
+            p.Status = "Onay Bekliyor";
             reservationManager.TAdd(p);
             return RedirectToAction("MyCurrentReservation",p.AppUserId);  
         }

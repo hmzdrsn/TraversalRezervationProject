@@ -9,6 +9,6 @@ namespace BusinessLayer.Abstract
 {
     public interface IReservationService : IGenericService<Reservation>
     {
-        List<Reservation> TGetListById(int id);
+        List<Reservation> GetListApprovalReservation(int id);
     }
 }

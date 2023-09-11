@@ -22,5 +22,13 @@
         @Html.Label("Varsa Eklemek İstedikleriniz")
         <input type="text" asp-for="Description" class="form-control" />
     </div>
-    <button class="btn btn-outline-success">Rezervasyon Yap</button>
+    <button class="btn btn-outline-success" onclick="showAlert()">Rezervasyon Yap</button>
 </form>
+
+<script>
+    function showAlert(){
+        var text = "Rezervasyon serüveniniziz kontrolü için güncel rezervasyon sayfasını kontrol etmeyi unutmayın"
+        alert(text);
+    }
+
+</script>

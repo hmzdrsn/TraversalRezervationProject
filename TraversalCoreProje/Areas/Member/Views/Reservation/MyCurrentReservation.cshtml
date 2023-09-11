@@ -1,0 +1,23 @@
+﻿@model List<Reservation>
+@{
+    ViewData["Title"] = "MyCurrentReservation";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<table class="table">
+    <tr>
+        <th>Açıklama</th>
+        <th>Tarih</th>
+        <th>Kişi Sayısı</th>
+        <th>kullanıcı id</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <th>@item.Description</th>
+            <th>@item.ReservationDate</th>
+            <th>@item.PersonCount</th>
+            <th>@item.AppUserId</th>
+        </tr>
+    }
+</table>

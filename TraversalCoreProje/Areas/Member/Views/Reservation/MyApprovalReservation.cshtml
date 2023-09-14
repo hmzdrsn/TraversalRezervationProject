@@ -5,24 +5,32 @@
 }
 
 <h1>Onay Bekleyen Rezervasyonlar</h1>
+@if (!Model.Any())
+{
+    <div class="container mt-5">
+        <h4 style="color:crimson">Onay bekleyen rezervasyonunuz bulunmamaktadır.</h4>
+    </div>
+}
+else
+{
 
-<table class="table table-bordered"> 
-    <tr>
-        <th>#</th>
-        <th>Lokasyon</th>
-        <th>Kişi Sayısı</th>
-        <th>Rezervasyon Tarihi</th>
-        <th>Durum</th>
-    </tr>
-    @foreach (var item in Model)
-    {
+    <table class="table table-bordered"> 
         <tr>
-            <th>@item.ReservationID</th>
-            <th>@item.Destination</th>
-            <th>@item.PersonCount</th>
-            <th>@item.ReservationDate</th>
-            <th>@item.Status</th>
+            <th>#</th>
+            <th>Lokasyon</th>
+            <th>Kişi Sayısı</th>
+            <th>Rezervasyon Tarihi</th>
+            <th>Durum</th>
         </tr>
-    }
-</table>
-
+        @foreach (var item in Model)
+        {
+                <tr>
+                    <th>@item.ReservationID</th>
+                    <th>@item.Destination.City</th>
+                    <th>@item.PersonCount</th>
+                    <th>@item.ReservationDate</th>
+                    <th>@item.Status</th>
+                </tr>
+        }
+    </table>
+}

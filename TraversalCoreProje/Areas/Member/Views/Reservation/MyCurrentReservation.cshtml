@@ -4,20 +4,36 @@
     Layout = "~/Views/Shared/_UserLayout.cshtml";
 }
 
-<table class="table">
-    <tr>
-        <th>Açıklama</th>
-        <th>Tarih</th>
-        <th>Kişi Sayısı</th>
-        <th>kullanıcı id</th>
-    </tr>
-    @foreach (var item in Model)
-    {
+
+<h1>Aktif Rezervasyonlar</h1>
+@if (!Model.Any())
+{
+    <div class="container mt-5">
+        <h4 style="color:crimson">Aktif rezervasyonunuz bulunmamaktadır.</h4>
+    </div>
+}
+else
+{
+    <table class="table table-bordered">
         <tr>
-            <th>@item.Description</th>
-            <th>@item.ReservationDate</th>
-            <th>@item.PersonCount</th>
-            <th>@item.AppUserId</th>
+            <th>#</th>
+            <th>Lokasyon</th>
+            <th>Kişi Sayısı</th>
+            <th>Rezervasyon Tarihi</th>
+            <th>Durum</th>
         </tr>
-    }
-</table>
+        @foreach (var item in Model)
+        {
+                <tr>
+                    <th>@item.ReservationID</th>
+                    <th>@item.Destination.City</th>
+                    <th>@item.PersonCount</th>
+                    <th>@item.ReservationDate</th>
+                    <th>@item.Status</th>
+                </tr>
+        }
+    </table>
+
+
+}
+

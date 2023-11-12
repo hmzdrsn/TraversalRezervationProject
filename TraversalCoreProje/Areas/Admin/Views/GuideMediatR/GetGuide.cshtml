@@ -1,0 +1,21 @@
+﻿@model GetByIdGuideQueryResult
+@{
+    ViewData["Title"] = "GetGuide";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+
+<h2>CQRS Rehber Düzenleme </h2>
+
+<form method="post" class="form-control">
+    <input type="hidden" asp-for="GuideID" />
+
+    <label>Şehir</label>
+    <input type="text" asp-for="Name" class="form-control"/>
+    <br />
+    <label>Gün-Gece</label>
+    <input type="text" asp-for="Description" class="form-control"/>
+    <br />
+    <button class="btn btn-outline-primary">Güncelle</button>
+</form>

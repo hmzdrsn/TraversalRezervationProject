@@ -1,0 +1,19 @@
+﻿@model AnnouncementAddDto
+@{
+    ViewData["Title"] = "AnnouncementAddDto";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>AnnouncementAddDto</h1>
+
+<form method="post">
+    <label>Duyuru Başlığı</label>
+    <input type="text" class="form-control" asp-for="Title"/>
+    <span asp-validation-for="Title" class="text-danger"></span>
+    <br />
+    <label>Duyuru İçeriği</label>
+    <input type="text" class="form-control" asp-for="Content"/>
+    <span asp-validation-for="Content" class="text-danger"></span>
+    <br />
+    <button class="btn btn-outline-primary">Duyuru Oluştur</button>
+</form>

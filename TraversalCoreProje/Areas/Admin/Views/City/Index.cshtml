@@ -1,0 +1,119 @@
+﻿@{
+	ViewData["Title"] = "Index";
+	Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<button type="button" id="btngetlist" class="btn btn-outline-info">Rota Listesi</button>
+<button type="button" id="btngetlistbyid" class="btn btn-outline-info">Ara</button>
+<button type="button" id="btnaddCity" class="btn btn-outline-dark">Kayıt Ekle</button>
+<button type="button" id="deleteDestination" class="btn btn-outline-dark">Kaydı Sil</button>
+<button type="button" id="updateDestination" class="btn btn-outline-dark">Kaydı Güncelle</button>
+<div>
+<input type="text" id="txtDestinationID" placeholder="Şehir ID'sini giriniz" class="form-control" />
+<br />
+<input type="text" id="txtCity" placeholder="Şehir Adını giriniz" class="form-control" />
+<br />
+<input type="text" id="txtDayNight" placeholder="Gece-gün giriniz" class="form-control" />
+<br />
+<input type="text" id="txtPrice" placeholder="Fiyat giriniz" class="form-control" />
+<br />
+<input type="text" id="txtCapacity" placeholder="Kapasite giriniz" class="form-control" />
+
+</div>
+<div id="placeData">
+	
+	Buraya Şehir Listesi Gelecek
+</div>
+
+
+
+<script>
+	$("#btngetlist").click(function () {
+		$.ajax({
+			contentType: "application/json",
+			dataType: "json",
+			type: "Get",
+			url: "/Admin/City/ListJsonDestination/",
+			success: function (func) {
+				let w = jQuery.parseJSON(func);
+				console.log(w);
+				let tablehtml = "<table class=table table-bordered> <tr><th>ID</th><th> Şehir Adı </th> <th> Gün-Gece </th> <th> Fiyatı </th> </tr>";
+				$.each(w, (index, value) => {
+					tablehtml += `<tr><td>${value.DestinationID}</td><td>${value.City}</td> <td>${value.DayNight}</td> <td> ${value.Price} ₺ </td> </tr>`
+				});
+				tablehtml += "</table>";
+				$("#placeData").html(tablehtml);
+			}
+		});
+	});
+
+	$("#btngetlistbyid").click(function () {
+		let id = $("#txtDestinationID").val();
+		$.ajax({
+			contentType: "application/json",
+			dataType: "json",
+			type: "Get",
+			url: "/Admin/City/ListJsonDestinationById/",
+			data: { DestId: id },
+			success: function (func) {
+
+				let data = jQuery.parseJSON(func);
+				let tablehtml = `<table class=table table-bordered> <tr><th> Şehir Adı </th> <th> Gün-Gece </th> <th> Fiyatı </th> </tr>` +
+					`<tr><td>${data.City}</td><td>${data.DayNight}</td><td>${data.Price}</td></tr></table>`;
+				$("#placeData").html(tablehtml);
+			}
+
+		});
+	});
+
+	
+	$("#btnaddCity").click(function(){
+		let values = {
+			City: $("#txtCity").val(),
+			DayNight: $("#txtDayNight").val(),
+			Price: $("#txtPrice").val(),
+			Capacity: $("#txtCapacity").val()
+			};
+
+		$.ajax({
+			type: "POST",
+			url: "/Admin/City/AddDestination",
+			data: values,
+			success:function(func){
+				let result = jQuery.parseJSON(func);
+				alert("Rota Başarılı Bir Şekilde Eklendi");
+			}
+		});
+	});
+
+	$("#deleteDestination").click(x=>{
+		let id = $("#txtDestinationID").val();
+		$.ajax({
+			type: "POST",
+			url: "/Admin/City/DeleteDestination/"+id,
+			contentType:"application/json",
+			dataType: "json",
+			success:function(func){
+				alert("Rota Silindi");
+			}
+		});
+	});
+
+	$("#updateDestination").click(function(){
+		let values = {
+			DestinationID: $("#txtDestinationID").val(),
+			City: $("#txtCity").val(),
+			DayNight: $("#txtDayNight").val(),
+			Price: $("#txtPrice").val(),
+			Capacity: $("#txtCapacity").val()
+		};
+		$.ajax({
+			type: "POST",
+			url: "/Admin/City/UpdateDestination/",
+			data: values,
+			success:function(func){
+				alert("Güncelleme Yapıldı")
+			}
+		})
+	})
+</script>

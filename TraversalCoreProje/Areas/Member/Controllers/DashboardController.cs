@@ -22,5 +22,9 @@ namespace TraversalCoreProje.Areas.Member.Controllers
             ViewBag.test = "ViewBagTestDashboard";
             return View();
         }
+        public async Task<IActionResult> MemberDashboard()
+        {
+            return View();
+        }
     }
 }

@@ -10,5 +10,9 @@ namespace DataAccessLayer.Abstract
 {
     public interface IDestinationDal : IGenericDal<Destination>
     {
-    }
+		void DeleteDestinationById(int id);
+        public Destination GetDestinationWithGuide(int id);
+
+        public List<Destination> GetLast4Destinations();
+	}
 }

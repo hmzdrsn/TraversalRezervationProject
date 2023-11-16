@@ -1,4 +1,4 @@
-﻿@model TraversalCoreProje.Areas.Member.Models.UserEditViewModel
+﻿@model DTOLayer.DTOs.AppUserDTOs.AppUserEditDTOs
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_MemberLayout.cshtml";
@@ -24,6 +24,9 @@
                 <div class="card-body">
                     <p class="card-text">Profil ile ilgili bilgilerinizi bu sayfadan güncelleyebilirsiniz</p>
                     <form method="post" enctype="multipart/form-data">
+                        @Html.Label("Kullanıcı Adınız")
+                        <input type="text" asp-for="UserName" class="form-control" />
+                        <br />
                         @Html.Label("Adınız")
                         <input type="text" asp-for="name" class="form-control" />
                         <br />
@@ -36,9 +39,11 @@
                         @Html.Label("Şifreniz")
                         <input type="text" asp-for="password" class="form-control" />
                         <br />
+                        <span asp-validation-for="password" class="text-danger"></span><br />
                         @Html.Label("Şifre Tekrar")
                         <input type="text" asp-for="confirmpassword" class="form-control" />
                         <br />
+                        <span asp-validation-for="confirmpassword" class="text-danger"></span><br />
                         @Html.Label("Telefon Numarası")
                         <input type="text" asp-for="phonenumber" class="form-control" />
                         <br />

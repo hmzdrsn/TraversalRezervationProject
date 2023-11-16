@@ -1,0 +1,57 @@
+﻿@model List<Reservation>
+@{
+	ViewData["Title"] = "Index";
+	Layout = "~/Views/Shared/_AdminLayout.cshtml";
+	int c = 0;
+}
+
+<h1>Rezervasyon</h1>
+
+<table class="table table-bordered">
+	<tr>
+		<th>#</th>
+		<th>İsim</th>
+		<th>Kullanıcı Adı</th>
+		<th>Rezervasyon Yeri</th>
+		<th>Rezervasyon Tarihi</th>
+		<th>Kişi Sayısı</th>
+		<th>Açıklama</th>
+		<th>Durum</th>
+	</tr>
+	@foreach (var item in Model)
+	{
+		c++;
+		<tr>
+			<td>@c</td>
+			<td>@item.AppUser.Name</td>
+			<td>@item.AppUser.UserName</td>
+			<td>@item.Destination.City</td>
+			<td>@item.ReservationDate</td>
+			<td>@item.PersonCount</td>
+			<td>@item.Description</td>
+			<td>
+				<form method="post">
+					<select name="status" asp-action="Index">
+						<option selected>@item.Status</option>
+						@if (item.Status == "Onay Bekliyor")
+						{
+							<option value="@item.ReservationID,Onaylandı">Onaylandı</option>
+							<option value="@item.ReservationID,Geçmiş Rezervasyon">Geçmiş Rezervasyon</option>
+						}
+						else if (item.Status == "Onaylandı")
+						{
+							<option value="@item.ReservationID,Onay Bekliyor">Onay Bekliyor</option>
+							<option value="@item.ReservationID,Geçmiş Rezervasyon">Geçmiş Rezervasyon</option>
+						}
+						else if (item.Status == "Geçmiş Rezervasyon")
+						{
+							<option value="@item.ReservationID,Onay Bekliyor">Onay Bekliyor</option>
+							<option value="@item.ReservationID,Onaylandı">Onaylandı</option>
+						}
+					</select>
+					<button class="btn btn-outline-info">Değiştir</button>
+				</form>
+			</td>
+		</tr>
+	}
+</table>

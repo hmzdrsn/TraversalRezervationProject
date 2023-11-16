@@ -7,7 +7,7 @@ using TraversalCoreProje.Areas.Admin.Models;
 namespace TraversalCoreProje.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [AllowAnonymous]
+    [Authorize()]
     public class AccountController : Controller
     {
         private readonly IAccountService _accountService;
@@ -16,11 +16,13 @@ namespace TraversalCoreProje.Areas.Admin.Controllers
         {
             _accountService = accountService;
         }
+        [Authorize(Roles ="Admin")]
         [HttpGet]
         public IActionResult Index()
         {
             return View();
         }
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult Index(AccountViewModel model)
         {

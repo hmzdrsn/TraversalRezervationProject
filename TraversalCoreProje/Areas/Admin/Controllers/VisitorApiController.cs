@@ -6,7 +6,7 @@ using TraversalCoreProje.Areas.Admin.Models;
 
 namespace TraversalCoreProje.Areas.Admin.Controllers
 {
-    [AllowAnonymous]
+    [Authorize(Roles = "Admin")]
     [Area("Admin")]
     public class VisitorApiController : Controller
     {

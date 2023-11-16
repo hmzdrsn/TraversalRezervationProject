@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace TraversalCoreProje.Areas.Member.Controllers
 {
     [Area("Member")]
-    [AllowAnonymous]
+    [Authorize(Roles = "Member")]
     public class DestinationController : Controller
     {
         

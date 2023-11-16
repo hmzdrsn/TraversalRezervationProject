@@ -1,10 +1,16 @@
 using BusinessLayer.Container;
+using BusinessLayer.ValidationRules;
 using DataAccessLayer.Concrete;
+using DocumentFormat.OpenXml.Wordprocessing;
+using DTOLayer.DTOs.AppUserDTOs;
 using EntityLayer.Concrete;
+using FluentValidation;
 using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.AspNetCore.Mvc.Razor;
 using TraversalCoreProje.CQRS.Handlers.DestinationHandlers;
 using TraversalCoreProje.Models;
 
@@ -35,12 +41,14 @@ builder.Services.AddLogging(
 builder.Services.AddDbContext<Context>();
 builder.Services.AddIdentity<AppUser, AppRole>()
     .AddEntityFrameworkStores<Context>()
-    .AddErrorDescriber<CustomIdentityValidator>().AddEntityFrameworkStores<Context>();
+    .AddErrorDescriber<CustomIdentityValidator>()
+    .AddTokenProvider<DataProtectorTokenProvider<AppUser>>(TokenOptions.DefaultProvider)//ÔøΩifre Yenileme Linki ÔøΩÔøΩin Token Register.
+    .AddEntityFrameworkStores<Context>();
 
 
-builder.Services.AddHttpClient();//visitorapicontroller iÁinde kullan˝lan httpclient icin ders 70
+builder.Services.AddHttpClient();//visitorapicontroller iÔøΩinde kullanÔøΩlan httpclient icin ders 70
 
-builder.Services.ContainerDependencies();//ders 56 ef core bag˝ml˝l˝g˝n˝n kald˝r˝lmas˝.
+builder.Services.ContainerDependencies();//ders 56 ef core bagÔøΩmlÔøΩlÔøΩgÔøΩnÔøΩn kaldÔøΩrÔøΩlmasÔøΩ.
 
 
 
@@ -52,6 +60,13 @@ builder.Services.AddControllersWithViews(options =>
     options.Filters.Add(new AuthorizeFilter(policy));
     
 });
+//DÔøΩL DESTEÔøΩÔøΩ
+builder.Services.AddLocalization(opt =>
+{
+    opt.ResourcesPath = "Resources";
+});
+//dildesteÔøΩi
+builder.Services.AddMvc().AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix).AddDataAnnotationsLocalization();
 
 //MAPLEME
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
@@ -60,6 +75,7 @@ builder.Services.AddControllersWithViews().AddFluentValidation();
 builder.Services.ConfigureApplicationCookie(opt =>
 {
     opt.LoginPath = "/Login/SignIn";
+    opt.AccessDeniedPath = new PathString("/Default/Index");//yetkilendirilmi≈ü sayfaya eri≈ümeye √ßalƒ±≈üan yetkisiz kullanƒ±cƒ±larƒ± ‚Äú/Default/Index‚Äù adresine y√∂nlendirmekteyiz.
 });
 
 
@@ -83,6 +99,13 @@ app.UseAuthentication();
 
 
 app.UseAuthorization();
+
+//dil desteÔøΩi 
+var supportedCultures = new[] { "en", "fr", "es", "tr", "de" };
+var localizationOptions = new RequestLocalizationOptions().SetDefaultCulture(supportedCultures[3])
+    .AddSupportedCultures(supportedCultures)//backend tarafÔøΩna ekle?
+    .AddSupportedUICultures(supportedCultures);//frontend tarafÔøΩna ekle? 
+app.UseRequestLocalization(localizationOptions);
 
 app.MapControllerRoute(
     name: "default",

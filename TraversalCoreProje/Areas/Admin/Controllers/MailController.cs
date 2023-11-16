@@ -1,4 +1,5 @@
 ﻿using MailKit.Net.Smtp;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MimeKit;
 using TraversalCoreProje.Models;
@@ -6,6 +7,7 @@ using TraversalCoreProje.Models;
 namespace TraversalCoreProje.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class MailController : Controller
     {
 
@@ -24,7 +26,7 @@ namespace TraversalCoreProje.Areas.Admin.Controllers
             MailboxAddress mailboxAddressTo = new MailboxAddress("User", mailRequest.ReceiverMail);
 
             mimeMessage.To.Add(mailboxAddressTo);
-            mimeMessage.Subject = mailRequest.Body;
+            mimeMessage.Subject = mailRequest.Subject;
             mimeMessage.Body = new TextPart()
             {
                 Text = mailRequest.Body

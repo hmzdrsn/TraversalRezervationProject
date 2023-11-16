@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace TraversalCoreProje.Areas.Member.Controllers
+namespace TraversalCoreProje.Controllers
 {
-    public class MessageController : Controller
+    public class InformationController : Controller
     {
         public IActionResult Index()
         {

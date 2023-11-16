@@ -38,8 +38,16 @@ namespace DataAccessLayer.EntityFramework
             using (var context = new Context())
             {
                 return context.Reservations.Include(x => x.Destination)
-                    .Where(x => x.Status == "Onay Bekliyor" && x.AppUserId==id)
+                    .Where(x => x.Status == "Onay Bekliyor" && x.AppUserId == id)
                     .ToList();
+            }
+        }
+
+        public List<Reservation> GetListWithAll()//unused
+        {
+            using (var context = new Context())
+            {
+                return context.Reservations.Include(x => x.AppUser).Include(y => y.Destination).ToList();
             }
         }
     }

@@ -4,11 +4,13 @@ using BusinessLayer.Concrete;
 using DataAccessLayer.EntityFramework;
 using DTOLayer.DTOs.ContactDTOs;
 using EntityLayer.Concrete;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace TraversalCoreProje.Controllers
 {
+    [AllowAnonymous]
     public class ContactController : Controller
     {
         private readonly IContactUsService _contactUsService;

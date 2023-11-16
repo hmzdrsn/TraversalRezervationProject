@@ -1,6 +1,7 @@
 ﻿using DocumentFormat.OpenXml.Office2010.Excel;
 using DocumentFormat.OpenXml.Office2021.Excel.RichDataWebImage;
 using EntityLayer.Concrete;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using OfficeOpenXml.Attributes;
@@ -10,6 +11,7 @@ namespace TraversalCoreProje.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Route("Admin/Role")]
+    [Authorize(Roles = "Admin")]
     public class RoleController : Controller
     {
         private readonly RoleManager<AppRole> _roleManager;
@@ -113,7 +115,7 @@ namespace TraversalCoreProje.Areas.Admin.Controllers
 
 
 		[Route("AssignRole/{id}")]
-		[HttpGet]
+		[HttpPost]
 		public async Task<IActionResult> AssignRole(List<RoleAssignViewModel> list)
         {
             var userID= (int)TempData["userId"];
@@ -129,7 +131,7 @@ namespace TraversalCoreProje.Areas.Admin.Controllers
                     await _userManager.RemoveFromRoleAsync(userData, item.RoleName);
 				}
             }
-            return RedirectToAction("UserList");
+            return RedirectToAction("ListUser");
         }
 
 	}

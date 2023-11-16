@@ -51,12 +51,17 @@ namespace BusinessLayer.Concrete
 
         public List<Reservation> TGetList()
         {
-            throw new NotImplementedException();
+            return _reservationDal.GetList();
+        }
+
+        public List<Reservation> TGetListWithAll()
+        {
+            return _reservationDal.GetListWithAll();
         }
 
         public void TUpdate(Reservation t)
         {
-            throw new NotImplementedException();
+            _reservationDal.Update(t);
         }
     }
 }

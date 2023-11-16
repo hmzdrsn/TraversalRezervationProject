@@ -1,10 +1,12 @@
 ﻿using BusinessLayer.Abstract;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace TraversalCoreProje.Areas.Admin.Controllers
 {
 	[Area("Admin")]
-	public class ContactUsController : Controller
+    [Authorize(Roles = "Admin")]
+    public class ContactUsController : Controller
 	{
 		private readonly IContactUsService _ContactUs;
 

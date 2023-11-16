@@ -1,4 +1,5 @@
-﻿<div class="main-menu menu-fixed menu-light menu-accordion    menu-shadow " data-scroll-to-active="true" data-img="~/member/theme-assets/images/backgrounds/02.jpg">
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+<div class="main-menu menu-fixed menu-light menu-accordion    menu-shadow " data-scroll-to-active="true" data-img="~/member/theme-assets/images/backgrounds/02.jpg">
     <div class="navbar-header">
         <ul class="nav navbar-nav flex-row">
             <li class="nav-item mr-auto">
@@ -16,7 +17,7 @@
                 <a href="/Member/Dashboard/MemberDashboard/"><i class="ft-home"></i><span class="menu-title" data-i18n="">Dashboard</span></a>
             </li>
             <li class=" nav-item">
-                <a href="/Member/Profile/Index/"><i class="ft-pie-chart"></i><span class="menu-title" data-i18n="">Profilim</span></a>
+                <a href="/Member/Profile/Index/"><i class="ft-pie-chart"></i><span class="menu-title" data-i18n="">@localizer["Profilim"]</span></a>
             </li>
             <li class=" nav-item">
                 <a href="/Member/Reservation/MyCurrentReservation/"><i class="ft-droplet"></i><span class="menu-title" data-i18n="">Aktif Rezv.</span></a>
@@ -32,6 +33,9 @@
             </li>
             <li class=" nav-item">
                 <a href="/Member/Comment/Index/"><i class="ft-command"></i><span class="menu-title" data-i18n="">Yorumlarım</span></a>
+            </li>
+            <li class=" nav-item">
+                <a href="/Member/Mail/Index/"><i class="ft-command"></i><span class="menu-title" data-i18n="">Mail Gönder</span></a>
             </li>
             <li class=" nav-item">
                 <a href="/Member/Destination/Index/"><i class="ft-map"></i><span class="menu-title" data-i18n="">Tur Rotaları</span></a>
